@@ -1,25 +1,40 @@
 package br.usjt.arqsw18.pipoca.model.service;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.usjt.arqsw18.pipoca.model.dao.FilmeDAO;
 import br.usjt.arqsw18.pipoca.model.entity.Filme;
 
+
+@Service
 public class FilmeService {
+	private FilmeDAO dao;
 	
-	private FilmeDAO filmeDAO; 
-	
-	public FilmeService() {
-		
-		filmeDAO = new FilmeDAO();
+	@Autowired
+	public FilmeService(FilmeDAO dao) {
+		this.dao = dao;
 	}
 	
+	public Filme buscarFilme(int id) throws IOException{
+		return dao.buscarFilme(id);
+	}
 	
-	public int inserirFilme(Filme filme) throws SQLException, IOException {
-		
-		
-		return filmeDAO.inserirFilme(filme);
+	public Filme inserirFilme(Filme filme) throws IOException {
+		int id = dao.inserirFilme(filme);
+		filme.setId(id);
+		return filme;
+	}
+
+	public ArrayList<Filme> listarFilmes(String chave) throws IOException{
+		return dao.listarFilmes(chave);
+	}
+
+	public ArrayList<Filme> listarFilmes() throws IOException{
+		return dao.listarFilmes();
 	}
 
 }

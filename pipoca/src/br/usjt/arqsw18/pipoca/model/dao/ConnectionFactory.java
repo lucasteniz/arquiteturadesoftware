@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-
 	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -17,20 +16,15 @@ public class ConnectionFactory {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static Connection getConnection() throws SQLException, IOException {
 
-		String stringConexao = "jdbc:mysql://localhost:3306/pipocadb";
-		String usuario = "Alunos";
-		String senha = "alunos";
-		
+	public static Connection getConnection() throws IOException {
 		try {
-			return DriverManager.getConnection(stringConexao,usuario,senha);
-		} catch (Exception e) {
-			// TODO: handle exception
+			return DriverManager.getConnection("jdbc:mysql://localhost/pipocadb?"
+					+ "user=alunos&password=alunos&useSSL=false");
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);
 		}
-		
 	}
+
 }
